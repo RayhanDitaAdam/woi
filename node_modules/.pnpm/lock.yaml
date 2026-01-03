@@ -1,0 +1,108 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@snap/camera-kit':
+        specifier: ^1.13.0
+        version: 1.13.0(google-protobuf@3.21.4)
+
+packages:
+
+  '@bufbuild/protobuf@2.10.2':
+    resolution: {integrity: sha512-uFsRXwIGyu+r6AMdz+XijIIZJYpoWeYzILt5yZ2d3mCjQrWUTVpVD9WL/jZAbvp+Ed04rOhrsk7FiTcEDseB5A==}
+
+  '@improbable-eng/grpc-web@0.15.0':
+    resolution: {integrity: sha512-ERft9/0/8CmYalqOVnJnpdDry28q+j+nAlFFARdjyxXDJ+Mhgv9+F600QC8BR9ygOfrXRlAk6CvST2j+JCpQPg==}
+    peerDependencies:
+      google-protobuf: ^3.14.0
+
+  '@snap/camera-kit@1.13.0':
+    resolution: {integrity: sha512-z4U00aF0w9GaPQyzjlut2W5SoFip5ferMSFV814tawBAaxl+69+/EaEC/2FyDpZSCtf/DTIqH9fYoa6UAaJdwQ==}
+
+  '@snap/state-management@1.13.0':
+    resolution: {integrity: sha512-097J+uUYhVwMGkm8a2eLo1/JOPJzA3Sptvruqvcs5T4qL+MiHSfNAn5X//+oLs9lWk7gPcPbN/mqe0YB70RsVQ==}
+    peerDependencies:
+      rxjs: ^7.5.7
+
+  '@snap/ts-inject@0.3.2':
+    resolution: {integrity: sha512-qfJeleX3vhyPaQcwmtxZVr9tLQsm0/yZcSHAdJIX+f7CUP+kmf2K+XxBCUrUBVfPQci2Mai3CNZG7Rnk5J2G7w==}
+
+  '@types/trusted-types@2.0.7':
+    resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
+
+  browser-fs-access@0.35.0:
+    resolution: {integrity: sha512-sLoadumpRfsjprP8XzVjpQc0jK8yqHBx0PtUTGYj2fftT+P/t+uyDAQdMgGAPKD011in/O+YYGh7fIs0oG/viw==}
+
+  browser-headers@0.4.1:
+    resolution: {integrity: sha512-CA9hsySZVo9371qEHjHZtYxV2cFtVj5Wj/ZHi8ooEsrtm4vOnl9Y9HmyYWk9q+05d7K3rdoAE0j3MVEFVvtQtg==}
+
+  google-protobuf@3.21.4:
+    resolution: {integrity: sha512-MnG7N936zcKTco4Jd2PX2U96Kf9PxygAPKBug+74LHzmHXmceN16MmRcdgZv+DGef/S9YvQAfRsNCn4cjf9yyQ==}
+
+  rxjs@7.8.2:
+    resolution: {integrity: sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==}
+
+  tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
+  uuid@10.0.0:
+    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+    hasBin: true
+
+  wasm-feature-detect@1.8.0:
+    resolution: {integrity: sha512-zksaLKM2fVlnB5jQQDqKXXwYHLQUVH9es+5TOOHwGOVJOCeRBCiPjwSg+3tN2AdTCzjgli4jijCH290kXb/zWQ==}
+
+snapshots:
+
+  '@bufbuild/protobuf@2.10.2': {}
+
+  '@improbable-eng/grpc-web@0.15.0(google-protobuf@3.21.4)':
+    dependencies:
+      browser-headers: 0.4.1
+      google-protobuf: 3.21.4
+
+  '@snap/camera-kit@1.13.0(google-protobuf@3.21.4)':
+    dependencies:
+      '@bufbuild/protobuf': 2.10.2
+      '@improbable-eng/grpc-web': 0.15.0(google-protobuf@3.21.4)
+      '@snap/state-management': 1.13.0(rxjs@7.8.2)
+      '@snap/ts-inject': 0.3.2
+      '@types/trusted-types': 2.0.7
+      browser-fs-access: 0.35.0
+      browser-headers: 0.4.1
+      rxjs: 7.8.2
+      tslib: 2.8.1
+      uuid: 10.0.0
+      wasm-feature-detect: 1.8.0
+    transitivePeerDependencies:
+      - google-protobuf
+
+  '@snap/state-management@1.13.0(rxjs@7.8.2)':
+    dependencies:
+      rxjs: 7.8.2
+
+  '@snap/ts-inject@0.3.2': {}
+
+  '@types/trusted-types@2.0.7': {}
+
+  browser-fs-access@0.35.0: {}
+
+  browser-headers@0.4.1: {}
+
+  google-protobuf@3.21.4: {}
+
+  rxjs@7.8.2:
+    dependencies:
+      tslib: 2.8.1
+
+  tslib@2.8.1: {}
+
+  uuid@10.0.0: {}
+
+  wasm-feature-detect@1.8.0: {}
