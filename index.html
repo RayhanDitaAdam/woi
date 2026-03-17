@@ -1,183 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Snap Lens Fullscreen</title>
-  
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <style>
-    /* Reset & Fullscreen */
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: #000;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    /* Canvas full layar */
-    #my-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Container Tombol */
-    .ui-container {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      z-index: 100;
-    }
-
-    /* Tombol Switch modern (Glassmorphism) */
-    #switch-btn {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      color: white;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    #switch-btn:active {
-      transform: scale(0.85) rotate(45deg);
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    /* Icon size */
-    svg {
-      width: 24px;
-      height: 24px;
-    }
-
-    /* Indikator Loading (Opsional) */
-    #loading {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      font-size: 14px;
-      z-index: 5;
-      pointer-events: none;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snap Lens Fullscreen</title>
+  <style>
+    /* Canvas full screen */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    #my-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
-
-  <div id="loading">Memulai Kamera...</div>
-  <canvas id="my-canvas"></canvas>
-
-  <div class="ui-container">
-    <button id="switch-btn" title="Switch Camera">
-      <i data-lucide="refresh-cw"></i>
-    </button>
-  </div>
-
-  <script type="module">
-    // Menggunakan JSDelivr/Skypack yang lebih stabil untuk Camera Kit
-    import { 
-      bootstrapCameraKit, 
-      createMediaStreamSource, 
-      Transform2D 
-    } from "https://cdn.jsdelivr.net/npm/@snap/camera-kit@latest/dist/index.js";
-
-    let session, currentSource;
-    let currentFacingMode = 'user'; 
-    const canvas = document.getElementById("my-canvas");
-    const btn = document.getElementById('switch-btn');
-    const loadingText = document.getElementById('loading');
-
-    // Inisialisasi Icon
-    lucide.createIcons();
-
-    // Fungsi utama buat ngatur kamera
-    async function setupCamera(mode) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: mode,
-            width: { ideal: 1280 },
-            height: { ideal: 720 }
-          }
-        });
-
-        const source = createMediaStreamSource(stream, {
-          // Mirror cuma aktif kalau kamera depan ('user')
-          transform: mode === 'user' ? Transform2D.MirrorX : Transform2D.None,
-          cameraType: mode
-        });
-
-        await session.setSource(source);
-        currentSource = source;
-        loadingText.style.display = 'none';
-      } catch (err) {
-        console.error("Gagal akses kamera:", err);
-        alert("Akses kamera ditolak atau tidak ditemukan.");
-      }
-    }
-
-    async function init() {
-      try {
-        const apiToken = "eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzY2NTQ2NTcwLCJzdWIiOiI5ZjMzNjgyMC1mZmU1LTRiOWUtYWU3Zi02NWEwMGQ3ZDRkZGF-UFJPRFVDVElPTn44NWVhMDc1Zi0yNzU0LTRhZDMtYTkxOS04NDM1ZTZmZjZlMmMifQ.GsN5muzCjhgw9L2IBV__jYK7XTA4AAG1cJjFmGpoITE";
-        
-        // 1. Bootstrapping
-        const cameraKit = await bootstrapCameraKit({ apiToken });
-        
-        // 2. Buat Session
-        session = await cameraKit.createSession({ liveRenderTarget: canvas });
-
-        // 3. Load Lens
-        const lens = await cameraKit.lensRepository.loadLens(
-          "904d21c1-8594-46c8-9213-75e96917fd88",
-          "80fbb4a2-5c57-4bc6-8821-8494bf5a8e69"
-        );
-        
-        await session.applyLens(lens);
-
-        // 4. Jalankan Kamera & Play
-        await setupCamera(currentFacingMode);
-        await session.play();
-
-        console.log("Snap Lens is Live!");
-      } catch (error) {
-        console.error("Inisialisasi gagal:", error);
-      }
-    }
-
-    // Listener Tombol Switch
-    btn.addEventListener('click', async () => {
-      // Toggle mode
-      currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
-      
-      // Kasih feedback visual dikit
-      btn.style.opacity = "0.5";
-      
-      await setupCamera(currentFacingMode);
-      
-      btn.style.opacity = "1";
-    });
-
-    // Jalankan aplikasi
-    init();
-  </script>
+  <canvas id="my-canvas"></canvas>
+  <script type="module" src="index.js"></script>
 </body>
 </html>
